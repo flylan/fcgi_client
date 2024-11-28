@@ -161,6 +161,10 @@ func DialTimeout(network, address string, timeout time.Duration) (fcgi *FCGIClie
 		return
 	}
 
+	if err = conn.SetDeadline(time.Now().Add(timeout)); err != nil {
+		return
+	}
+
 	fcgi = &FCGIClient{
 		rwc:       conn,
 		keepAlive: false,
